@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Google Image Search</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="submit">Submit</string>
+    <string name="cant_connect">Could not Connect</string>
+    <string name="query_hint">Enter search query</string>
+    <string name="phototext">Text</string>
+    <string name="photoResult">Photo Results </string>
+    <string name="title_activity_image_display">Full Image</string>
+    <string name="noconnection">No Network Access</string>
+
+</resources>
