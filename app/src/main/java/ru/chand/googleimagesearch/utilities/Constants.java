@@ -6,5 +6,6 @@ package ru.chand.googleimagesearch.utilities;
 public class Constants {
     
   public final static String NUMBER_OF_RESULTS = "8";
+  public final static String FRAGEMENT_PARAMETER_TITLE = "title";
     
 }

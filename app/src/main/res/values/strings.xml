@@ -11,5 +11,11 @@
     <string name="photoResult">Photo Results </string>
     <string name="title_activity_image_display">Full Image</string>
     <string name="noconnection">No Network Access</string>
+    
+    <string name="settingsTitle">Advance Options</string>
+    <string name="imagesize">Image Size</string>
+    <string name="colorfilter">Color Filter</string>
+    <string name="imagetype">Image Type</string>
+    <string name="sitefilter">Site Filter</string>
 
 </resources>

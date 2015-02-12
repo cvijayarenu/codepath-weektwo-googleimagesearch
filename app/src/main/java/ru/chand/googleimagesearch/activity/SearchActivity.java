@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -41,6 +42,7 @@ import java.util.Map;
 
 import ru.chand.googleimagesearch.R;
 import ru.chand.googleimagesearch.adaptor.PhotoAdaptor;
+import ru.chand.googleimagesearch.fragment.EditOptionsDialog;
 import ru.chand.googleimagesearch.model.Photo;
 import ru.chand.googleimagesearch.utilities.Constants;
 
@@ -52,6 +54,7 @@ public class SearchActivity extends ActionBarActivity {
     private SearchView searchView;
     private int nextIndex;
     private PhotoAdaptor photosAdaptor;
+    Map<String,String> options;
 
     public final static String GOOGLE_IMAGE_SEARCH_PROTOCOL = "https";
     public final static String GOOGLE_IMAGE_SEARCH_DOMAIN = "ajax.googleapis.com";
@@ -63,14 +66,22 @@ public class SearchActivity extends ActionBarActivity {
         setContentView(R.layout.activity_search);
         photos = new ArrayList<Photo>();
         photosAdaptor = new PhotoAdaptor(this, photos);
-        nextIndex = 0;
         // Set a ToolBar to replace the ActionBar.
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         setupViews();
+        initializeOptions();
+    }
+    
+    private void initializeOptions(){
+        nextIndex = 0;
+        options = new HashMap<>();
+        options.put("v","1.0");
+        options.put("rsz", Constants.NUMBER_OF_RESULTS);
+        options.put("start", String.valueOf(nextIndex));
     }
 
     private void setupViews() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         gvResults = (GridView) findViewById(R.id.gvResults);
         gvResults.setAdapter(photosAdaptor);
         gvResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -113,16 +124,10 @@ public class SearchActivity extends ActionBarActivity {
     
     private Map<String, String> getCurrentOptions(){
         String query = searchView.getQuery().toString();
-        Map<String,String> options = new HashMap<>();
-        options.put("v","1.0");
-        options.put("q",query);
-        options.put("rsz", Constants.NUMBER_OF_RESULTS);
         options.put("start", String.valueOf(nextIndex));
+        options.put("q", query);
         return options;
     }
-
-    
-    
 
 
     @Override
@@ -134,6 +139,10 @@ public class SearchActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            FragmentManager fm = getSupportFragmentManager();
+            EditOptionsDialog editNameDialog = EditOptionsDialog.newInstance(getString(R.string.settingsTitle));
+            editNameDialog.show(fm, "fragment_edit_options");
+            
             return true;
         }
 
