@@ -2,32 +2,21 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" tools:context=".SearchActivity">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:id="@+id/etQuery"
-        android:hint="@string/query_hint"
-        android:layout_toLeftOf="@+id/btnSubmit"
-        android:layout_alignBottom="@id/btnSubmit"
-        />
 
-    <Button
-        android:id="@+id/btnSubmit"
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:text="@string/submit"
-        android:onClick="doImageSearch"
-        />
-
+        android:background="?attr/colorPrimary">
+    </android.support.v7.widget.Toolbar>
+    
     <GridView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/gvResults"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/etQuery"
+        android:layout_below="@+id/toolbar"
         android:numColumns="3">
 
         </GridView>
