@@ -85,15 +85,14 @@
         android:text="@string/ok"
         android:id="@+id/btnOk"
         android:layout_below="@+id/tvSiteFilter"
-        android:minWidth="150dp"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="false" />
+        android:layout_alignParentStart="false"
+        />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/cancel"
-        android:minWidth="150dp"
         android:id="@+id/btnCancel"
         android:layout_alignTop="@+id/btnOk"
         android:layout_alignParentRight="true"

@@ -6,26 +6,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 
 import ru.chand.googleimagesearch.R;
+import ru.chand.googleimagesearch.model.SearchOptions;
 import ru.chand.googleimagesearch.utilities.Constants;
 
 /**
  * Created by chandrav on 2/12/15.
  */
 public class EditOptionsDialog extends DialogFragment {
-    
-    private EditText evImageSize;
+
+    private Button btnSave;
+    private Button btnCancel;
 
     public EditOptionsDialog() {
         // Empty constructor required for DialogFragment
     }
 
-    public static EditOptionsDialog newInstance(String title) {
+    public static EditOptionsDialog newInstance(String title, SearchOptions searchOptions) {
         EditOptionsDialog frag = new EditOptionsDialog();
         Bundle args = new Bundle();
         args.putString(Constants.FRAGEMENT_PARAMETER_TITLE, title);
+        args.putSerializable(Constants.FRAGEMENT_PARAMETER_SEARCH_OPTIONS,searchOptions );
         frag.setArguments(args);
         return frag;
     }
@@ -38,6 +42,29 @@ public class EditOptionsDialog extends DialogFragment {
         getDialog().setTitle(title);
         getDialog().getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        btnSave = (Button) view.findViewById(R.id.btnOk);
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getArguments().putString("TEST", "TEST VALUE");
+                dismiss();
+                
+            }
+        });
+        
+        btnCancel = (Button) view.findViewById(R.id.btnCancel);
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+        
+        
+        
+
         return view;
     }
+
+        
 }

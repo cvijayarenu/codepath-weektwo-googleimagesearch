@@ -18,7 +18,7 @@
     <string name="imagetype">Image Type</string>
     <string name="sitefilter">Site Filter</string>
     
-    <string name="ok">OK</string>
+    <string name="ok">Save</string>
     <string name="cancel">Cancel</string>
 
 </resources>
