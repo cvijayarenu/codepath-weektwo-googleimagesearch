@@ -1,5 +1,7 @@
 package ru.chand.googleimagesearch.fragment;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
@@ -10,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import ru.chand.googleimagesearch.R;
+import ru.chand.googleimagesearch.activity.SearchActivity;
 import ru.chand.googleimagesearch.model.SearchOptions;
 import ru.chand.googleimagesearch.utilities.Constants;
 
@@ -47,6 +50,10 @@ public class EditOptionsDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 getArguments().putString("TEST", "TEST VALUE");
+                Intent i = new Intent();
+                SearchOptions searchOptions = (SearchOptions) getArguments().getSerializable(Constants.FRAGEMENT_PARAMETER_SEARCH_OPTIONS);
+                i.putExtra("search", searchOptions);
+//                getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK,i);
                 dismiss();
                 
             }
@@ -66,5 +73,5 @@ public class EditOptionsDialog extends DialogFragment {
         return view;
     }
 
-        
+
 }

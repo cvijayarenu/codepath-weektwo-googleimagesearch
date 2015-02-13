@@ -1,5 +1,6 @@
 package ru.chand.googleimagesearch.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -55,6 +56,7 @@ public class SearchActivity extends ActionBarActivity {
     private SearchView searchView;
     private PhotoAdaptor photosAdaptor;
     private SearchOptions searchOptions;
+    public static final int SEARCH_OPTION_FRAGMENT=1;
     
 
     public final static String GOOGLE_IMAGE_SEARCH_PROTOCOL = "https";
@@ -126,10 +128,8 @@ public class SearchActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            FragmentManager fm = getSupportFragmentManager();
             EditOptionsDialog editNameDialog = EditOptionsDialog.newInstance(getString(R.string.settingsTitle), searchOptions);
-            editNameDialog.show(fm, "fragment_edit_options");
-
+            editNameDialog.show(getSupportFragmentManager(), "fragment_edit_options");
             return true;
         }
 
@@ -206,4 +206,15 @@ public class SearchActivity extends ActionBarActivity {
     }
 
 
-}
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch(requestCode) {
+            case  SEARCH_OPTION_FRAGMENT:
+                if (resultCode == Activity.RESULT_OK) {
+
+                }
+                break;
+
+        }
+    }}
