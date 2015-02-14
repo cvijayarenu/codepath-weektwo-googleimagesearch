@@ -134,8 +134,6 @@ public class SearchActivity extends ActionBarActivity implements SearchOptionsDi
         client.get(url, null, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                //Log.i("DEBUG",response.toString());
-
                 try {
                     JSONObject responseData = response.getJSONObject("responseData");
                     JSONArray photosJsonArray = responseData.getJSONArray("results");
