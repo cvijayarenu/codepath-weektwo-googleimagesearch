@@ -7,6 +7,7 @@ import java.util.Map;
 import ru.chand.googleimagesearch.utilities.Helper;
 
 /**
+ * Search options to store all the info
  * Created by chandrav on 2/12/15.
  */
 public class SearchOptions implements Serializable {
@@ -19,7 +20,7 @@ public class SearchOptions implements Serializable {
     public static final String IMAGE_TYPE = "imgtype";
     public static final String SITE_FILTER = "as_sitesearch";
     
-    private Map<String, String> options;
+    private Map<String, String> options = new HashMap<>();
     
     public SearchOptions(){
         reset();
@@ -46,7 +47,6 @@ public class SearchOptions implements Serializable {
     }
 
     public void reset(){
-        options = new HashMap<>();
         options.put(VERSION,"1.0");
         options.put(NO_OF_RESULTS, Helper.NUMBER_OF_RESULTS);
         options.put(START, "0");
