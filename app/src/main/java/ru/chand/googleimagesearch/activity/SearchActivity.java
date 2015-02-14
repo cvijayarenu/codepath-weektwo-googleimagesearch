@@ -33,6 +33,7 @@ import ru.chand.googleimagesearch.adaptor.PhotoAdaptor;
 import ru.chand.googleimagesearch.fragment.SearchOptionsDialog;
 import ru.chand.googleimagesearch.model.Photo;
 import ru.chand.googleimagesearch.model.SearchOptions;
+import ru.chand.googleimagesearch.utilities.EndlessScrollListener;
 import ru.chand.googleimagesearch.utilities.Helper;
 
 
@@ -72,6 +73,13 @@ public class SearchActivity extends ActionBarActivity implements SearchOptionsDi
                 startActivity(i);
             }
         });
+        
+        gvResults.setOnScrollListener( new EndlessScrollListener() {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                customLoadMoreDataFromApi(page);
+            }
+        });
 
     }
 
@@ -86,7 +94,8 @@ public class SearchActivity extends ActionBarActivity implements SearchOptionsDi
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                searchOptions.setOption("q", query);
+                searchOptions.setOption(SearchOptions.QUERY, query);
+                searchOptions.reset();
                 doGoogleImageSearch(searchOptions.getAllOptions());
                 return true;
             }
@@ -120,6 +129,12 @@ public class SearchActivity extends ActionBarActivity implements SearchOptionsDi
     
 
     public void doGoogleImageSearch(Map options){
+        
+        if(options.get(SearchOptions.START).equals("0")){
+            photosAdaptor.clear();
+        } else if (options.get(SearchOptions.START).equals("64")){
+            return;
+        }
 
         if (!isNetworkAvailable()){
             Toast.makeText(getApplicationContext(), R.string.noconnection,Toast.LENGTH_SHORT).show();
@@ -137,7 +152,6 @@ public class SearchActivity extends ActionBarActivity implements SearchOptionsDi
                 try {
                     JSONObject responseData = response.getJSONObject("responseData");
                     JSONArray photosJsonArray = responseData.getJSONArray("results");
-                    photosAdaptor.clear();
                     photosAdaptor.addAll(Photo.FromJsonArray(photosJsonArray));
 
                 } catch (JSONException ex){
@@ -167,5 +181,15 @@ public class SearchActivity extends ActionBarActivity implements SearchOptionsDi
     public void onFinishingSearchOptions(SearchOptions so) {
         this.searchOptions = so;
         doGoogleImageSearch(searchOptions.getAllOptions());
+    }
+
+    // Append more data into the adapter
+    public void customLoadMoreDataFromApi(int offset) {
+        // This method probably sends out a network request and appends new data items to your adapter.
+        // Use the offset value and add it as a parameter to your API request to retrieve paginated data.
+        // Deserialize API response and then construct new objects to append to the adapter
+        searchOptions.incrementPage();
+        doGoogleImageSearch(searchOptions.getAllOptions());
+        
     }
 }

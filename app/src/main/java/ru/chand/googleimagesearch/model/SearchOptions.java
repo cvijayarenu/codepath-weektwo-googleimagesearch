@@ -19,6 +19,7 @@ public class SearchOptions implements Serializable {
     public static final String IMAGE_COLOR = "imgcolor";
     public static final String IMAGE_TYPE = "imgtype";
     public static final String SITE_FILTER = "as_sitesearch";
+    public static final String QUERY = "q";
     
     private Map<String, String> options = new HashMap<>();
     
@@ -35,10 +36,11 @@ public class SearchOptions implements Serializable {
     }
     
     public void incrementPage(){
-        options.put("start", String.valueOf( 
-                Integer.parseInt(options.get("rsz")) +
-                Integer.parseInt(options.get("start"))
+        options.put(START, String.valueOf(
+                Integer.parseInt(options.get(SearchOptions.NO_OF_RESULTS)) +
+                Integer.parseInt(options.get(SearchOptions.START))
         ));
+        String start = options.get(SearchOptions.START);
         
     }
     
