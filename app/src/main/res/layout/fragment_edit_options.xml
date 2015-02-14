@@ -6,7 +6,10 @@
     android:paddingTop="10dp"
     android:paddingBottom="10dp"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="#3B7DF1"
+    
+    >
 
     <TextView
         android:id="@+id/tvImageSize" android:text="@string/imagesize"
@@ -16,8 +19,8 @@
         android:layout_alignParentTop="true"
         android:paddingRight="10sp"
         android:gravity="center"
-        
-        />
+        android:textColor="#FFFFFF"
+        android:autoText="false" />
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,6 +37,7 @@
         android:layout_below="@+id/tvImageSize"
         android:layout_alignBottom="@+id/spImageColor"
         android:layout_alignParentLeft="true"
+        android:textColor="#FFFFFF"
         android:gravity="center"
         />
     <Spinner
@@ -49,6 +53,7 @@
         android:layout_width="wrap_content"
         android:paddingRight="10sp"
         android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
         android:layout_alignBottom="@+id/spImageType"
         android:layout_below="@+id/tvImageColor"
         android:layout_alignParentLeft="true"
@@ -66,6 +71,7 @@
         android:id="@+id/tvSiteFilter" android:text="@string/sitefilter"
         android:layout_width="wrap_content"
         android:paddingRight="10sp"
+        android:textColor="#FFFFFF"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/etSiteFilter"
         android:layout_below="@+id/spImageType"
@@ -76,6 +82,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" 
         android:id="@+id/etSiteFilter"
+        android:textColor="#FFFFFF"
+        android:hint="flickr.com"
         android:layout_toRightOf="@+id/tvSiteFilter"
         android:layout_below="@+id/spImageType"/>
 
@@ -84,6 +92,7 @@
         android:layout_height="wrap_content"
         android:text="@string/ok"
         android:id="@+id/btnOk"
+        android:textColor="#FFFFFF"
         android:layout_below="@+id/tvSiteFilter"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="false"
@@ -94,6 +103,7 @@
         android:layout_height="wrap_content"
         android:text="@string/cancel"
         android:id="@+id/btnCancel"
+        android:textColor="#FFFFFF"
         android:layout_alignTop="@+id/btnOk"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />

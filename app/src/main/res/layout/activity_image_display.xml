@@ -11,6 +11,7 @@
         android:id="@+id/ivFullScreen"
         android:maxWidth="600dp"
         android:scaleType="center"
+        android:background="#55A2F3"
         android:adjustViewBounds="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"

@@ -1,12 +1,9 @@
 package ru.chand.googleimagesearch.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -17,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.Toast;
 
@@ -25,43 +21,29 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.utils.URIUtils;
-import org.apache.http.client.utils.URLEncodedUtils;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import ru.chand.googleimagesearch.R;
 import ru.chand.googleimagesearch.adaptor.PhotoAdaptor;
-import ru.chand.googleimagesearch.fragment.EditOptionsDialog;
+import ru.chand.googleimagesearch.fragment.SearchOptionsDialog;
 import ru.chand.googleimagesearch.model.Photo;
 import ru.chand.googleimagesearch.model.SearchOptions;
-import ru.chand.googleimagesearch.utilities.Constants;
+import ru.chand.googleimagesearch.utilities.Helper;
 
 
-public class SearchActivity extends ActionBarActivity {
+public class SearchActivity extends ActionBarActivity implements SearchOptionsDialog.SearchOptionsDialogListener {
 
     private GridView gvResults;
     private ArrayList<Photo> photos;
     private SearchView searchView;
     private PhotoAdaptor photosAdaptor;
     private SearchOptions searchOptions;
-    public static final int SEARCH_OPTION_FRAGMENT=1;
-    
 
-    public final static String GOOGLE_IMAGE_SEARCH_PROTOCOL = "https";
-    public final static String GOOGLE_IMAGE_SEARCH_DOMAIN = "ajax.googleapis.com";
-    public final static String GOOGLE_IMAGE_SEARCH_PATH = "/ajax/services/search/images";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,7 +110,7 @@ public class SearchActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            EditOptionsDialog editNameDialog = EditOptionsDialog.newInstance(getString(R.string.settingsTitle), searchOptions);
+            SearchOptionsDialog editNameDialog = SearchOptionsDialog.newInstance(getString(R.string.settingsTitle), searchOptions);
             editNameDialog.show(getSupportFragmentManager(), "fragment_edit_options");
             return true;
         }
@@ -136,41 +118,18 @@ public class SearchActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
     
-    private String urlBuilder(Map options){
-        String url = "";
-        List<NameValuePair> qparams = new ArrayList<NameValuePair>();
-        Iterator it = options.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pairs = (Map.Entry)it.next();
-            qparams.add(new BasicNameValuePair(pairs.getKey().toString(), pairs.getValue().toString()));
-        }
 
-        try {
-            URI uri = URIUtils.createURI(
-                    GOOGLE_IMAGE_SEARCH_PROTOCOL,
-                    GOOGLE_IMAGE_SEARCH_DOMAIN, 
-                    -1,
-                    GOOGLE_IMAGE_SEARCH_PATH,
-                    URLEncodedUtils.format(qparams, "UTF-8"),
-                    null
-            );
-            return uri.toString();
-
-        } catch (URISyntaxException e) {
-            Log.d("DEBUG", "Could not form url ");
-            e.printStackTrace();
-        }
-        
-        return url;
-    }
-    
     public void doGoogleImageSearch(Map options){
 
         if (!isNetworkAvailable()){
             Toast.makeText(getApplicationContext(), R.string.noconnection,Toast.LENGTH_SHORT).show();
             return;
         }
-        String url = urlBuilder(options);
+        String url = Helper.UrlBuilder(
+                Helper.GOOGLE_IMAGE_SEARCH_PROTOCOL,
+                Helper.GOOGLE_IMAGE_SEARCH_DOMAIN,
+                Helper.GOOGLE_IMAGE_SEARCH_PATH,
+                options);
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(url, null, new JsonHttpResponseHandler(){
             @Override
@@ -206,15 +165,9 @@ public class SearchActivity extends ActionBarActivity {
     }
 
 
-
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch(requestCode) {
-            case  SEARCH_OPTION_FRAGMENT:
-                if (resultCode == Activity.RESULT_OK) {
-
-                }
-                break;
-
-        }
-    }}
+    public void onFinishingSearchOptions(SearchOptions so) {
+        this.searchOptions = so;
+        doGoogleImageSearch(searchOptions.getAllOptions());
+    }
+}
